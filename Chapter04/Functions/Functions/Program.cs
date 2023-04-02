@@ -5,4 +5,10 @@ DoSomething();
 //TimesTable(9);
 
 
-WriteLine ($" 5! = {Factorial(5)}");
+//RunFactorial();
+
+for (int i = 1; i <= 30; i++)
+{
+    WriteLine($"FibFunctional = {FibFunctional(term: i)}");
+    WriteLine($"FibImperative = {FibImperative(i)}");
+}

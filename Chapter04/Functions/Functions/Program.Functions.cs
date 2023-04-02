@@ -43,4 +43,49 @@ partial class Program
             return number * Factorial(number - 1);
         }
     }
+    static void RunFactorial()
+    {
+        for (int i =-2; i < 15; i++)
+        {
+            try
+            {
+                WriteLine($"{i}!= {Factorial(i):N0}");
+            }
+            catch (OverflowException)
+            {
+                WriteLine($"{i}! is too big for a 32-bit integer.");
+            }
+            catch (Exception ex)
+            {
+                WriteLine($"{i}! throws {ex.GetType()}: {ex.Message}");
+            }
+        }
+    }
+
+    static int FibImperative(int term)
+    {
+        if (term ==1)
+        {
+            return 0;
+        }
+        if (term == 2)
+        {
+            return 1;
+        }
+        else
+        {
+            return FibImperative(term-1)+FibImperative(term-2);
+        }
+
+    }
+
+    static int FibFunctional(int term) =>
+        term switch
+        {
+            1 => 0,
+            2 => 1,
+            _ => FibFunctional(term-1) + FibFunctional(term-2)
+
+        };
+
 }
