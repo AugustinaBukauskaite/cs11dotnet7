@@ -1,4 +1,8 @@
-﻿using static System.Console;
+﻿using System.Buffers.Text;
+using System.Diagnostics;
+using static System.Console;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 partial class Program
 {
     static void DoSomething() // define a non-local static function
@@ -21,6 +25,22 @@ partial class Program
         }
     }
 
+    static void MyChecked()
+    {
+        unchecked
+        {
+            int x = int.MaxValue;
+            WriteLine(x);
+            x++;
+            WriteLine(x);
+            x++;
+            WriteLine(x);
+            x++; 
+            WriteLine(x);
+        }
+        
+    }
+
     static void Exceptions()
     {
         WriteLine("Before parsing");
@@ -41,7 +61,7 @@ partial class Program
         }
         catch(OverflowException ex)
         {
-            WriteLine($"your number is too large");
+            WriteLine($"{ex.GetType()}your number is too large");
         }
         
         WriteLine("After parsing");
@@ -116,5 +136,108 @@ partial class Program
             _ => FibFunctional(term-1) + FibFunctional(term-2)
 
         };
+
+    static int FizzBuzz(int amount)
+    {
+        for(int i=1;i<amount; i++)
+        {
+            int num = 0;
+            if(i%3==0)
+            {
+                Write("Fizz");
+                num++;
+            }
+            if(i%5==0)
+            {
+                Write("Buzz");
+                num++;
+            }
+            if (num==0)
+            {
+                Write($"{i}");
+            }
+
+        }
+        return 0;
+    }
+
+   
+    static void TwoNumbers()
+    {
+        WriteLine("please enter two numbers 0-255");
+        try
+        {
+            byte no1 = byte.Parse(ReadLine());
+            WriteLine(no1);
+        }
+        catch (Exception e)
+        {
+            WriteLine($"{e.GetType()} is throwing {e.Message}");
+        }
+        {
+
+        }
+
+    }
+
+
+    //static decimal CalculateTax( decimal amount, string twoLetterRegionCode)
+    //    {
+    //        decimal rate = 0.0M;
+    //        switch (twoLetterRegionCode)
+    //        {
+    //            case "CH": // Switzerland
+    //                rate = 0.08M;
+    //                break;
+    //            case "DK": // Denmark
+    //            case "NO": // Norway
+    //                rate = 0.25M;
+    //                break;
+    //            case "GB": // United Kingdom
+    //            case "FR": // France
+    //                rate = 0.2M;
+    //                break;
+    //            case "HU": // Hungary
+    //                rate = 0.27M;
+    //                break;
+    //            case "OR": // Oregon
+    //            case "AK": // Alaska
+    //            case "MT": // Montana
+    //                rate = 0.0M;                    
+    //        break;
+    //            case "ND": // North Dakota
+    //            case "WI": // Wisconsin
+    //            case "ME": // Maine
+    //            case "VA": // Virginia
+    //                rate = 0.05M;
+    //                break;
+    //            case "CA": // California
+    //                rate = 0.0825M;
+    //                break;
+    //            default: // most US states
+    //                rate = 0.06M;
+    //                break;
+    //        }
+    //        return amount * rate;
+    // }
+
+    static double Add(double a, double b)
+    {
+        return a + b; // deliberate bug!
+    }
+
+    static void TraceFolder()
+    {
+        string logPath = Path.Combine(Environment.GetFolderPath(
+        Environment.SpecialFolder.DesktopDirectory), "log.txt");
+        Console.WriteLine($"Writing to: {logPath}");
+        TextWriterTraceListener logFile = new(File.CreateText(logPath));
+        Trace.Listeners.Add(logFile);
+        // text writer is buffered, so this option calls
+        // Flush() on all listeners after writing
+        Trace.AutoFlush = true;
+        Debug.WriteLine("Debug says, I am watching!");
+        Trace.WriteLine("Trace says, I am watching!");
+    }
 
 }
