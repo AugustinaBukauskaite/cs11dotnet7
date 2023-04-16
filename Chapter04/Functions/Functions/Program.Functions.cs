@@ -5,7 +5,10 @@ partial class Program
     {
         WriteLine("Doing something!");
     }
-
+    /// <summary>
+    /// Print  multiplication table up to a certain amount
+    /// </summary>
+    /// <param name="size">the value up to which the multiplication table will be created</param>
     static void Multiply(int size )
     {
         for (int i = 0; i < size; i++)
@@ -16,6 +19,32 @@ partial class Program
             }
             WriteLine("-------------------");
         }
+    }
+
+    static void Exceptions()
+    {
+        WriteLine("Before parsing");
+        Write("What is your age? ");
+        string? input = ReadLine(); // or use "49" in a notebook
+        try
+        {
+            int age = int.Parse(input);
+            WriteLine($"You are {age} years old.");
+        }
+        //catch(Exception ex)
+        //{
+        //    Console.WriteLine($"{ex.GetType} throws {ex.Message}");
+        //}
+        catch(FormatException)
+        {
+            WriteLine("The age is not in the right format");
+        }
+        catch(OverflowException ex)
+        {
+            WriteLine($"your number is too large");
+        }
+        
+        WriteLine("After parsing");
     }
 
     static void TimesTable(byte number, byte size = 12)
